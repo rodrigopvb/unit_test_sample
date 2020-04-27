@@ -15,24 +15,33 @@ namespace CursoOnline.Tests
             var curso = new Curso(nome, publicoAlvo);
 
             Assert.Equal(nome, curso.nome);
-            Assert.Equal(publicoAlvo, curso.publicoAlvo);         
+            Assert.Equal(publicoAlvo, curso.publicoAlvo);          
 
         }
 
         [Fact]
-        public void CriarCurso_Valida_Campo_Valor_Null()
+        public void CriarCliente_Cpf_ok()
         {
-            string nome = "Curso de ADS";
-            string publicoAlvo = "Estudante";
-            string valor = null;
+            string nome = "Rodrigo";
+            string cpfValido = "980.699.080-33";
 
-            var curso = new Curso(nome, publicoAlvo);
-
-            Assert.Equal(nome, curso.nome);
-            Assert.Equal(publicoAlvo, curso.publicoAlvo); 
-            
-
+            var cliente = new Cliente(nome, cpfValido);
+         
+            Assert.True(ValidaDigitoCPF.ValidaCPF(cliente.cpf)); 
+            Assert.Equal(nome, cliente.nome);          
+            Assert.Equal(cpfValido, cliente.cpf);          
         }
+
+        [Fact]
+        public void CriarCliente_Cpf_Invalido()
+        {
+            string nome = "Rodrigo";
+            string cpfInvalido = "021.699.080-33";
+
+            var ex = Assert.Throws<Exception>(() => new Cliente(nome, cpfInvalido));
+            Assert.Equal("Cpf Inválido", ex.Message);
+ 
+        }               
 
     }
 }
